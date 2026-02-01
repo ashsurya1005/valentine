@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine ❤️</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-align: center;
+}
+
+h1 {
+  color: #b30047;
+  font-size: 22px;
+  padding: 0 15px;
+}
+
+/* Heart with photo */
+.heart {
+  width: 140px;
+  height: 140px;
+  background: red;
+  position: relative;
+  transform: rotate(-45deg);
+  margin: 20px 0;
+}
+
+.heart::before,
+.heart::after {
+  content: "";
+  width: 140px;
+  height: 140px;
+  background: red;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.heart::before { top: -70px; left: 0; }
+.heart::after { left: 70px; top: 0; }
+
+.heart img {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  top: 10px;
+  left: 10px;
+  object-fit: cover;
+  transform: rotate(45deg);
+  z-index: 2;
+}
+
+.buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+button {
+  padding: 12px 28px;
+  font-size: 16px;
+  border: none;
+  border-radius: 25px;
+}
+
+#yes {
+  background: #ff3366;
+  color: white;
+}
+
+#no {
+  background: #555;
+  color: white;
+  position: absolute;
+}
+
+.celebrate {
+  display: none;
+  font-size: 22px;
+  color: #b30047;
+  margin-top: 20px;
+}
+
+/* Heart rain */
+.heart-rain {
+  position: absolute;
+  top: -20px;
+  color: pink;
+  font-size: 18px;
+  animation: fall 5s linear infinite;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
+}
+
+/* Sky crackers */
+.cracker {
+  position: absolute;
+  bottom: 0;
+  width: 6px;
+  height: 6px;
+  background: gold;
+  animation: blast 1.6s ease-out infinite;
+}
+
+@keyframes blast {
+  100% {
+    transform: translateY(-220px) scale(4);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body onclick="playMusic()">
+
+<h1>Suryapriya 💖<br>Will you be my Valentine?</h1>
+
+<div class="heart">
+  <img src="her.jpg" alt="Her">
+</div>
+
+<div class="buttons">
+  <button id="yes">Yes</button>
+  <button id="no">No</button>
+</div>
+
+<div class="celebrate" id="celebrate">
+  🎉 Yayyy! You’re my Valentine 💕
+</div>
+
+<audio id="bgm" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const yesBtn = document.getElementById("yes");
+const noBtn = document.getElementById("no");
+const celebrate = document.getElementById("celebrate");
+const music = document.getElementById("bgm");
+
+function playMusic() {
+  music.play().catch(()=>{});
+}
+
+// YES click
+yesBtn.onclick = () => {
+  celebrate.style.display = "block";
+
+  // sky crackers
+  for (let i = 0; i < 20; i++) {
+    const c = document.createElement("div");
+    c.className = "cracker";
+    c.style.left = (i % 2 === 0 ? 5 : 95) + "vw";
+    c.style.background = ["gold","pink","red","white"][Math.floor(Math.random()*4)];
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),1600);
+  }
+};
+
+// NO runs away
+noBtn.onmouseover = noBtn.ontouchstart = () => {
+  noBtn.style.left = Math.random() * 80 + "vw";
+  noBtn.style.top = Math.random() * 70 + "vh";
+};
+
+// Heart rain generator
+setInterval(() => {
+  const h = document.createElement("div");
+  h.className = "heart-rain";
+  h.innerHTML = "💖";
+  h.style.left = Math.random() * 100 + "vw";
+  h.style.fontSize = (14 + Math.random()*16) + "px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),5000);
+}, 300);
+</script>
+
+</body>
+</html>
